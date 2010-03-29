@@ -1,6 +1,5 @@
 /*
  * TODO:
- * correctly bind pids to project divs
  * allow adding and removing of projects
  * 
  */
@@ -10,7 +9,6 @@ var taskit = function() {
   return {
 		onload: function() {
 			taskit.loadProjects();
-			taskit.loadTasks(0);
 			document.onkeydown = taskit.keyListener;
 			
 			// Set task-entry focus and blur behaviors
@@ -72,7 +70,7 @@ var taskit = function() {
       var html = "";
       for (i in projects) {
         var project = projects[i];
-        html += taskit.getProjectHTML(project.name, i);
+        html += taskit.getProjectHTML(project.pid, project.name, i);
       }
       $('div#project-column').html(html);
       
@@ -82,6 +80,7 @@ var taskit = function() {
 				$(this).addClass("current");
 			});
 			$("div.project:first").addClass("current");
+			taskit.loadTasks(taskit.getCurrentProjectID());
     },
     
     getTaskHTML: function(text, date, i) {
@@ -95,26 +94,27 @@ var taskit = function() {
       return html;
 		},
 		
-		getProjectHTML: function(name, i) {
-			var html = "<div class=\"project";
+		getProjectHTML: function(pid, name, i) {
+			var html = "<div id=\"project"+pid+"\" class=\"project";
 			if (i == 0) html += " first";
-			html += "\" onclick=\"taskit.loadTasks("+i+");\">";
+			html += "\" onclick=\"taskit.loadTasks("+pid+");\">";
       html += "<span class=\"project-name\">"+name+"</span>";
       html += "</div>";
       return html;
 		},
 		
 		getCurrentProjectID: function() {
+		  var pattern = /project(\d)/;
 			var projects = $("div.project");
 			for (i in projects) {
 				if (isNaN(i)) {
-					break; //error
+					continue; //error, went too far w/o finding current project
 				}
 				if ($(projects[i]).hasClass("current")) {
-					pid = i;
+				  return $(projects[i]).attr("id").match(pattern)[1];
 				}
 			}
-			return pid;
+			return -1;
 		},
     
     keyListener: function(e) {
