@@ -1,0 +1,37 @@
+var taskit = function() {
+  return {
+    loadTasks: function(pid) {
+      var data = {pid:pid};
+      $.ajax({
+        type: "GET",
+        url: "load_tasks.php",
+        data: data,
+        success: taskit.displayTasks
+      });
+    },
+    displayTasks: function(data) {
+      var tasks = $.parseJSON(data);
+      var html = "";
+      for (i in tasks) {
+        var task = tasks[i];
+        var date = $.datepicker.formatDate('M dd', new Date(tasks[i].due))
+        html += "<div class=\"task";
+        if (i == 0) html += " first";
+        html += "\">";
+        html += "<input type=\"checkbox\" />";
+        html += "<span class=\"task-description\">"+task.text+"</span>";
+        html += "<span class=\"task-due\">"+date+"</span>";
+        html += "</div>";
+      }
+      $('div#task-column').html(html);
+    }
+  }
+}();
+
+/*
+<div class="task">
+  <input type="checkbox" />
+  <span class="task-description">get paid</span>
+  <span class="task-due">Friday</span>
+</div>
+*/

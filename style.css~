@@ -1,0 +1,90 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: Arial;
+  font-size: 11px;
+}
+
+#main {
+  margin: auto;
+  width: 800px;
+}
+
+#titlebar {
+  margin: 20px;
+}
+
+#project-column, #tag-column {
+  width: 150px;
+  height: 600px;
+}
+
+#project-column {
+  float: left;
+}
+
+#tag-column {
+  float: right;
+}
+
+#task-column {
+  width: 480px;
+  margin: auto;
+  height: 600px;
+  padding: 10px;
+  border: 1px solid #686868;
+}
+
+.task {
+  border-left: 1px solid #686868;
+  border-right: 1px solid #686868;
+  border-bottom: 1px solid #686868;
+  background: #E4E4E4;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.first {
+  border-top: 1px solid #686868;
+}
+
+.task-description {
+  padding: 15px;
+}
+
+.task-due {
+  float: right;
+}
+
+.project, .tag {
+  border-left: 1px solid #686868;
+  border-right: 1px solid #686868;
+  border-bottom: 1px solid #686868;
+  padding: 15px;
+  text-align: right;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.project {
+  text-align: right;
+}
+
+.tag {
+  text-align: left;
+}  
+
+#all-projects {
+  background: #E8F6FF;
+}
+
+.project.current {
+  border-right: 1px solid white;
+}
+
+.tag.current {
+  border-left: 1px solid white;
+}
